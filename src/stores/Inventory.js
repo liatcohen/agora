@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx'
+import { observable, action, computed } from 'mobx'
 import { Item } from './Item';
 
 export class Inventory {
@@ -19,14 +19,18 @@ export class Inventory {
     @action buyItem = (name) => {
         let item = this.items.find(i => i.name === name)
         {
-            item.quantity >1 ?
+            item.quantity > 1 ?
                 item.quantity--
-                : this.items=this.items.filter(i=>i.name!==name)
+                : this.items = this.items.filter(i => i.name !== name)
         }
     }
 
-    @action changePrice =(name,price)=>{
-        this.items.find(i => i.name === name).price=price
+    @action changePrice = (name, price) => {
+        this.items.find(i => i.name === name).price = price
     }
-    
+
+    @computed get numItems() {
+        return this.items.length
+    }
 }
+// The value numItems should return the total number of items in the Agora.

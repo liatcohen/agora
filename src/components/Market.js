@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { observer } from 'mobx-react'
+import { observer ,inject} from 'mobx-react'
 import Item from './Item'
 
+@inject("inventory")
 @observer
 class Market extends Component {
     constructor() {
@@ -19,7 +20,6 @@ class Market extends Component {
             console.log('item: ', e.target.value);
             this.props.inventory.addItem(e.target.value)
             this.setState({ itemName: '' })
-
         }
     }
 
@@ -28,18 +28,10 @@ class Market extends Component {
             <div className="market">
                 <input value={this.state.itemName} onChange={this.handleChange} onKeyDown={this.keyPress}></input>
                 {this.props.inventory.items.map(i =>
-                    <Item item={i}
-                        buyItem={this.props.inventory.buyItem}
-                        editItem={this.props.inventory.editItem} />)}
+                    <Item item={i}/>)}
             </div>
         )
     }
 }
 
 export default Market
-// Your Market component should have an input to enter a new Item
-// On enter it should run a function which calls the store's addItem action
-// It should then reset the input to be empty
-
-
-// It should map the items array from your store, to Item components and pass the relevant data as props
